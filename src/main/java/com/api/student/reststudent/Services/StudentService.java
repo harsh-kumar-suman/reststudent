@@ -1,7 +1,7 @@
 package com.api.student.reststudent.Services;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,29 +16,17 @@ public class StudentService {
     @Autowired
     StudentRepo studentrepo;
 
-    private static List<Student> list = new ArrayList<>();
-    static{
-
-        list.add(new Student(2,"Shreeya Suman", 12, "C"));
-        list.add(new Student(3,"Raj Singh", 12, "A"));
-        list.add(new Student(4,"Rishabh Jain", 12, "B"));
-
-    }
-
     public List<Student> getAllStudents()
     {
-        // return list;
         return studentrepo.findAll();
-
     }
 
-    public Student getStudentbyrollno( Integer rollno)
+    public Student getStudentbyId( String id)
     {
         Student stu = null;
         try {
-            stu = list.stream().filter(item -> item.getRollno().equals(rollno)).collect(Collectors.toList()).get(0);
+            stu = studentrepo.findAll().stream().filter(item -> item.getId().equals(id)).collect(Collectors.toList()).get(0);
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
         }
         return stu;
@@ -47,27 +35,34 @@ public class StudentService {
     public void addStudent( Student stu)
     {
         studentrepo.save(stu);
-        // list.add(stu);
+        System.out.println("new student added with following deatils : \n"+stu.toString());
     }
 
-    public void deleteStudent(Integer rollno)
+    public void deleteStudentbyId(String id)
     {
-        list = list.stream().filter(stu -> stu.getRollno()!=rollno).collect(Collectors.toList());
+        studentrepo.deleteById(id);
+        System.out.println("student with id :"+id+" is deleated");
     }
 
-    public void updateStudent(Integer rollno, Student changestu)
+    public void updateStudent(String id , Student changestu)
     {
-        list = list.stream().map(stu ->{
-            if(stu.getRollno()==rollno)
+        List<Student> list = studentrepo.findAll().stream().map(stu ->{
+            if(Objects.equals(stu.getId(), id))
             {
-                stu.setClassno(changestu.getClassno());
+                stu.setBranch(changestu.getBranch());
                 stu.setName(changestu.getName());
-                stu.setSection(changestu.getSection());
+                stu.setCgpa(changestu.getCgpa());
             }
             return stu;
         }).collect(Collectors.toList());
+        studentrepo.saveAll(list);
+        System.out.println("student with id :"+id+" is updated");
+
     }
 
 
     
 }
+
+
+

@@ -37,11 +37,11 @@ public class StudentController {
 
     } 
 
-    @GetMapping("/students/{rollno}")
+    @GetMapping("/students/{id}")
     @ResponseBody
-    public ResponseEntity<Student> getStudent(@PathVariable("rollno") Integer rollno)
+    public ResponseEntity<Student> getStudent(@PathVariable("id") String id)
     {
-        Student stu = this.studentService.getStudentbyrollno(rollno);
+        Student stu = this.studentService.getStudentbyId(id);
         
         
         if(stu == null)
@@ -64,18 +64,18 @@ public class StudentController {
         
     }
 
-    @DeleteMapping("students/{rollno}")
+    @DeleteMapping("students/{id}")
     @ResponseBody
-    public void deleteStudent(@PathVariable("rollno") Integer rollno)
+    public void deleteStudent(@PathVariable("id") String id)
     {
-        this.studentService.deleteStudent((rollno));
+        this.studentService.deleteStudentbyId(id);
     }
 
-    @PutMapping("students/{rollno}")
+    @PutMapping("students/{id}")
     @ResponseBody
-    public void updateStudent(@PathVariable("rollno") Integer rollno, @RequestBody Student stu)
+    public void updateStudent(@PathVariable("id") String id, @RequestBody Student stu)
     {
-        this.studentService.updateStudent(rollno, stu);
+        this.studentService.updateStudent(id, stu);
     }
     
 }

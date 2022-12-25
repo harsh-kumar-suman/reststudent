@@ -1,64 +1,47 @@
 package com.api.student.reststudent.Model;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "StudentDetail")
 public class Student {
 
-    private Integer rollno;
+    @Id
+    private String id;
     private String name;
-    private Integer classno;
-    private String section;
+    private String branch;
+    private Float cgpa;
 
-
-    public Student(Integer rollno, String name, Integer classno, String section) {
-        this.rollno = rollno;
-        this.name = name;
-        this.classno = classno;
-        this.section = section;
-    }
-
-    public Integer getRollno() {
-        return this.rollno;
-    }
-
-    public void setRollno(Integer rollno) {
-        this.rollno = rollno;
-    }
-
+    
     @Override
     public String toString() {
-        return "{" +
-            " rollno='" + getRollno() + "'" +
-            ", name='" + getName() + "'" +
-            ", classno='" + getClassno() + "'" +
-            ", section='" + getSection() + "'" +
-            "}";
+        return "Student [id=" + id + ", name=" + name + ", branch=" + branch + ", cgpa=" + cgpa + "]";
     }
-
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
     public String getName() {
-        return this.name;
+        return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
-    public Integer getClassno() {
-        return this.classno;
+    public String getBranch() {
+        return branch;
+    }
+    public void setBranch(String branch) {
+        this.branch = branch;
+    }
+    public Float getCgpa() {
+        return cgpa;
+    }
+    public void setCgpa(Float cgpa) {
+        this.cgpa = cgpa;
     }
 
-    public void setClassno(Integer classno) {
-        this.classno = classno;
-    }
-
-    public String getSection() {
-        return this.section;
-    }
-
-    public void setSection(String section) {
-        this.section = section;
-    }
     
-    
+
 }
